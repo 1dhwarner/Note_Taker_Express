@@ -2,14 +2,11 @@ const notes = require('express').Router();
 const { v4: uuidv4 } = require('uuid');
 const { readAndAppend, readFromFile, writeToFile } = require('../helpers/fsUtils');
 
-// GET Route for retrieving all the feedback
-notes.get('/', (req, res) =>
-    readFromFile('./db/db.json').then((data) => res.json(JSON.parse(data)))
-);
 
+// I got almost all of this from the mini project from the same week's miniproject routes 
 // POST Route for submitting feedback
 notes.post('/', (req, res) => {
-    // Destructuring assignment for the items in req.body
+    // Destructuring assignment for the items in req.body. Our JSON only has two properties (title and text), so that's all that is needed for the req.body 
     const { title, text } = req.body;
 
     // If all the required properties are present
@@ -33,6 +30,11 @@ notes.post('/', (req, res) => {
         res.json('Error in posting note');
     }
 });
+
+// GET Route for retrieving all the feedback
+notes.get('/', (req, res) =>
+    readFromFile('./db/db.json').then((data) => res.json(JSON.parse(data)))
+);
 
 // DELETE Route for a specific tip
 notes.delete('/:id', (req, res) => {
